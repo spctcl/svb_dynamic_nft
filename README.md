@@ -1,1 +1,1 @@
-# svb_dynamic_nft
+# SVB Player Token Creation  
