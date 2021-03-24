@@ -7,7 +7,7 @@ module.exports = async (deployer, network, [defaultAccount]) => {
   // hard coded for rinkeby
   if (network.startsWith('rinkeby')) {
     await deployer.deploy(PlayerToken, RINKEBY_VRF_COORDINATOR, RINKEBY_LINKTOKEN, RINKEBY_KEYHASH)
-    let dnd = await PlayerToken.deployed()
+    let svb = await PlayerToken.deployed()
   } else if (network.startsWith('mainnet')) {
     console.log("If you're interested in early access to Chainlink VRF on mainnet, please email vrf@chain.link")
   } else {
