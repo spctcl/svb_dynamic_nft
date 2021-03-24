@@ -66,7 +66,7 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
             "Not enough LINK - fill contract with faucet"
         );
         bytes32 requestId = requestRandomness(keyHash, fee, userProvidedSeed);
-        requestToCharacterName[requestId] = name;
+        requestToPlayerName[requestId] = name;
         requestToSender[requestId] = msg.sender;
         return requestId;
     }
@@ -91,20 +91,20 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
     {
         uint256 newId = players.length;
 
-        players.push(
-            Player(
-                id
-            )
-        )
-        _safeMint(requestToSender[requestId], newId);
+        // players.push(
+        //     Player(
+        //         id
+        //     )
+        // );
+         _safeMint(requestToSender[requestId], newId);
     }
 
-    function getLevel(uint256 tokenId) public view returns (uint256) {
-        return sqrt(characters[tokenId].experience);
-    }
+    // function getLevel(uint256 tokenId) public view returns (uint256) {
+    //     return sqrt(players[tokenId].experience);
+    // }
 
     function getNumberOfPlayers() public view returns (uint256) {
-        return characters.length; 
+        return players.length; 
     }
 
     function getPlayerOverView(uint256 tokenId)
@@ -112,16 +112,14 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
         view
         returns (
             string memory,
-            uint256,
-            uint256,
             uint256
-        )
+        ) 
     {
         return (
+            // TODO: Make sure that we're returning complete player stats here.
             players[tokenId].name,
-            players[tokenId].total_goals + character[tokenId].yellow_cards + characters[tokenId].red_cards + characters[tokenId].total_assists + characters[tokenId].age + characters[tokenId].charisma,
-            getLevel(tokenId),
-            players[tokenId].experience
+            players[tokenId].total_goals + players[tokenId].yellow_cards + players[tokenId].red_cards + players[tokenId].total_assists + players[tokenId].age
+            //getLevel(tokenId)
         );
     }
 
@@ -135,11 +133,7 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
             uint256,
             uint256,
             uint256,
-            uint256,
-            uint256,
-            string,
-            string,
-            string
+            string memory
         )
     {
         return (
@@ -148,12 +142,8 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
             players[tokenId].yellow_cards,
             players[tokenId].red_cards,
             players[tokenId].total_assists,
-            players[tokenId].age,
             players[tokenId].jersey_number,
-            players[tokenId].name,
-            players[tokenId].team_name,
-            players[tokenId].position,
-            players[tokenId].preferred_foot
+            players[tokenId].name
         );
     }
 
