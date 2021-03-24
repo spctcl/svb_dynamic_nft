@@ -68,8 +68,8 @@ truffle exec scripts/generate-player.js --network rinkeby
 truffle exec scripts/get-player.js --network rinkeby
 ```
 
-This will create a new player with random stats! 
-Depending how often you deploy, you can pick which player by changing the [`dnd.getplayerOverView(1)`](contracts/player.sol) command in `get-player.js` to swap the `0` out with whatever `tokenId` of the player you like. 
+This will create a new player with a random id and user-supplied stat values.
+Depending how often you deploy, you can pick which player by changing the [`svb.getplayerOverView(1)`](contracts/player.sol) command in `get-player.js` to swap the `0` out with whatever `tokenId` of the player you like. 
 
 This will give you the overview of your NFT. You'll see `BN` since the call returns big numbers, you can cast them to ints to see what they are.... Or you could go one step farther
 
