@@ -1,4 +1,4 @@
-const PlayerToken = artifacts.require('PlayerToken')
+const PlayerTokenGenerator = artifacts.require('PlayerToken')
 const LinkTokenInterface = artifacts.require('LinkTokenInterface')
 
 /*
@@ -12,13 +12,13 @@ const payment = process.env.TRUFFLE_CL_BOX_PAYMENT || '3000000000000000000'
 
 module.exports = async callback => {
   try {
-    const dnd = await PlayerToken.deployed()
+    const generator = await PlayerTokenGenerator.deployed()
 
-    const tokenAddress = await svb.LinkToken()
+    const tokenAddress = await generator.LinkToken()
     console.log("Chainlink Token Address: ", tokenAddress)
     const token = await LinkTokenInterface.at(tokenAddress)
-    console.log('Funding contract:', svb.address)
-    const tx = await token.transfer(svb.address, payment)
+    console.log('Funding contract:', generator.address)
+    const tx = await token.transfer(generator.address, payment)
     callback(tx.tx)
   } catch (err) {
     callback(err)
