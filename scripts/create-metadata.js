@@ -1,57 +1,60 @@
-const SVBPlayers = artifacts.require('PlayerToken')
+const PlayerGenerator = artifacts.require('PlayerTokenGenerator')
 const fs = require('fs')
 
 const metadataTemple = {
     "name": "",
     "description": "",
     "image": "",
-    "attributes": // TODO: Complete attributes.
-        {
-            "trait_type": "Position",
-            "value": ""
-        },
-        {
-            "trait_type": "Preferred Foot",
-            "value": ""
-        },
-        {
-            "trait_type": "Team Name",
-            "value": ""
-        },
+    "attributes": [// TODO: Complete attributes.
         {
             "trait_type": "Jersey Number",
+            "value": ""
+        },
+        {
+            "trait_type": "Total Goals",
             "value": 0
         },
         {
-            "trait_type": "Age",
+            "trait_type": "Total Assists",
+            "value": 0
+        },
+        {
+            "trait_type": "Yellow Cards",
+            "value": 0
+        },
+        {
+            "trait_type": "Red Cards",
             "value": 0
         }
     ]
 }
 module.exports = async callback => {
-    const dnd = await DungeonsAndDragons.deployed()
-    length = await dnd.getNumberOfCharacters()
-    index = 0
-    while (index < length) {
-        console.log('Let\'s get the overview of your character ' + index + ' of ' + length)
-        let characterMetadata = metadataTemple
-        let characterOverview = await dnd.characters(index)
-        index++
-        characterMetadata['name'] = characterOverview['name']
-        if (fs.existsSync('metadata/' + characterMetadata['name'].toLowerCase().replace(/\s/g, '-') + '.json')) {
-            console.log('test')
-            continue
+    try {
+        const generator = await PlayerGenerator.deployed()
+        length = await generator.getNumberOfPlayers()
+        index = 0
+        while (index < length) {
+            console.log('Let\'s get the overview of your player ' + index + ' of ' + length)
+            let playerMetadata = metadataTemple
+            let playerOverview = await generator.players(index)
+            index++
+            playerMetadata['name'] = playerOverview['name']
+            if (fs.existsSync('metadata/' + playerMetadata['name'].toLowerCase().replace(/\s/g, '-') + '.json')) {
+                console.log('test')
+                continue
+            }
+            console.log(playerMetadata['name'])
+            // playerMetadata['attributes'][0]['value'] = playerOverview['jersey_number']['words'][0]
+            // playerMetadata['attributes'][1]['value'] = playerOverview['total_goals']['words'][0]
+            // playerMetadata['attributes'][2]['value'] = playerOverview['total_assists']['words'][0]
+            // playerMetadata['attributes'][3]['value'] = playerOverview['yellow_cards']['words'][0]
+            // playerMetadata['attributes'][4]['value'] = playerOverview['red_cards']['words'][0]
+            filename = 'metadata/' + playerMetadata['name'].toLowerCase().replace(/\s/g, '-')
+            let data = JSON.stringify(playerMetadata)
+            fs.writeFileSync(filename + '.json', data)
         }
-        console.log(characterMetadata['name'])
-        characterMetadata['attributes'][0]['value'] = characterOverview['strength']['words'][0]
-        characterMetadata['attributes'][1]['value'] = characterOverview['dexterity']['words'][0]
-        characterMetadata['attributes'][2]['value'] = characterOverview['constitution']['words'][0]
-        characterMetadata['attributes'][3]['value'] = characterOverview['intelligence']['words'][0]
-        characterMetadata['attributes'][4]['value'] = characterOverview['wisdom']['words'][0]
-        characterMetadata['attributes'][5]['value'] = characterOverview['charisma']['words'][0]
-        filename = 'metadata/' + characterMetadata['name'].toLowerCase().replace(/\s/g, '-')
-        let data = JSON.stringify(characterMetadata)
-        fs.writeFileSync(filename + '.json', data)
-    }
-    callback(dnd)
+        callback(generator)
+    } catch (err) {
+        callback(err)
+    }   
 }
