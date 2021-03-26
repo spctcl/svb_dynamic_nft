@@ -1,7 +1,7 @@
-const PlayerTokenGenerator = artifacts.require('PlayerToken')
+const PlayerGenerator = artifacts.require('PlayerTokenGenerator')
 
 module.exports = async callback => {
-  const generator = await PlayerTokenGenerator.deployed()
+  const generator = await PlayerGenerator.deployed()
   console.log('Creating requests on contract:', generator.address)
 
   // The player token generator takes a number as a random seed and a player name.

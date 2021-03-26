@@ -7,7 +7,8 @@ import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
+// TODO: Change PlayerToken to something more descriptive, like PlayerTokenGenerator.
+contract PlayerTokenGenerator is ERC721, VRFConsumerBase, Ownable {
     using SafeMath for uint256;
     using Strings for string;
 
@@ -19,17 +20,18 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
     address public LinkToken;
 
     struct Player {
-        uint256 id;
-        uint256 total_goals;
-        uint256 yellow_cards;
-        uint256 red_cards;
-        uint256 total_assists;
-        uint256 age;
-        uint256 jersey_number;
         string name;
-        string team_name;
-        string position;
-        string preferred_foot;
+        uint256 uid; // A random number that uniquely identifies this token.
+        // uint256 total_goals;
+        // uint256 yellow_cards;
+        // uint256 red_cards;
+        // uint256 total_assists;
+        // uint256 age;
+        // uint256 jersey_number;
+        // string name; // Watch for a duplicate of this value.
+        // string team_name;
+        // string position;
+        // string preferred_foot;
     }
 
     Player[] public players;
@@ -49,7 +51,7 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
     constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash)
         public
         VRFConsumerBase(_VRFCoordinator, _LinkToken)
-        ERC721("PlayerToken", "SVB")
+        ERC721("PlayerTokenGenerator", "SVB")
     {   
         VRFCoordinator = _VRFCoordinator;
         LinkToken = _LinkToken;
@@ -57,7 +59,8 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
         fee = 0.1 * 10**18; // 0.1 LINK
     }
 
-    function requestNewRandomPlayer(
+    // Make async call to Chainlink VRF.
+    function requestNewRandomPlayerToken(
         uint256 userProvidedSeed,
         string memory name
     ) public returns (bytes32) {
@@ -67,7 +70,7 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
         );
         bytes32 requestId = requestRandomness(keyHash, fee, userProvidedSeed);
         requestToPlayerName[requestId] = name;
-        requestToSender[requestId] = msg.sender;
+        requestToSender[requestId] = msg.sender; // Set the address value for this request id key to the sender's address.
         return requestId;
     }
 
@@ -89,13 +92,26 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
         internal
         override
     {
+        // This will give players sequential nummerical ids, in order of creation.
         uint256 newId = players.length;
+        uint256 uid = randomNumber;
 
-        // players.push(
-        //     Player(
-        //         id
-        //     )
-        // );
+        players.push(
+            Player(
+                requestToPlayerName[requestId],
+                uid
+                // 0,
+                // 0,
+                // 0,
+                // 0,
+                // 0,
+                // 0,
+                // "",
+                // "",
+                // "",
+                // ""
+            )
+        );
          _safeMint(requestToSender[requestId], newId);
     }
 
@@ -113,12 +129,14 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
         returns (
             string memory,
             uint256
+
         ) 
     {
         return (
             // TODO: Make sure that we're returning complete player stats here.
             players[tokenId].name,
-            players[tokenId].total_goals + players[tokenId].yellow_cards + players[tokenId].red_cards + players[tokenId].total_assists + players[tokenId].age
+            players[tokenId].uid
+            // players[tokenId].total_goals + players[tokenId].yellow_cards + players[tokenId].red_cards + players[tokenId].total_assists + players[tokenId].age
             //getLevel(tokenId)
         );
     }
@@ -127,23 +145,23 @@ contract PlayerToken is ERC721, VRFConsumerBase, Ownable {
         public
         view
         returns (
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            string memory
+            string memory,
+            uint256
+            // uint256,
+            // uint256,
+            // uint256,
+            // uint256
         )
     {
+        // TODO: We want to return all stats here, but doing so exceeds our max stack depth. Returning struct may solve this issue.
         return (
-            players[tokenId].id,
-            players[tokenId].total_goals,
-            players[tokenId].yellow_cards,
-            players[tokenId].red_cards,
-            players[tokenId].total_assists,
-            players[tokenId].jersey_number,
-            players[tokenId].name
+            players[tokenId].name,
+            players[tokenId].uid
+            // players[tokenId].jersey_number,
+            // players[tokenId].yellow_cards,
+            // players[tokenId].red_cards,
+            // players[tokenId].total_goals,
+            // players[tokenId].total_assists
         );
     }
 
