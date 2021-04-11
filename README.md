@@ -1,3 +1,44 @@
+# SVB Digital dynamic playercard (MH)
+<!-- Introduction -->
+## Introduction (SH)
+*Surinaamse Voetbal Bond (SVB)*  digital dynimac collectable player-card is a project built by a global team of developers participating in the ChainLink Hackathon 2021.
+<!-- Vision -->
+### **Vision**
+Football is the number 1 most popular & dominating sports-community in the world! with as much as *4 billion fans* we have seen the interaction between fans and the sport going from visiting matches physically from the frontlines of the pitch to nowadays following their favourite League/ club/ teams and players *various mediaplatforms*. Supporters and Fans got involved and engaged on a whole other level when *merchandise* made its way into the industry. Fans now got the chance to walk into a fanstore and purchase all the *decoration, sportswear & collectables* available displaying the club, teams or players they are proud of and love the most.
+
+ (with the next thing recently; legally betting systems)
+<!-- Mission -->
+### **Mission**
+This is a golden chance to learn how to develop on a project that gently introduces sports fans seamlessly to blockchain & smart contract environments using Chainlink 
+oracles.
+
+Our Mission is developing a exclusive digital dynamic collectable player card for low developed countrys in this case: ''*the proud fans of Suriname*'' that gives acces to 
+Exclusive artwork, limited edition
+images or behind the scene pictures content from ''*Natio Suriname*''.
+
+This to revolutionize engagement with the National soccer team in a revolutionary way.
+
+(Dynamic data on the card as a player evolves.)
+
+
+
+
+### **Solutions**
+
+* Adaption to blockchain & Smartcontract
+<!-- Technology -->
+* Users Devices/ Technology/ Solutions
+
+Internet and wifi are becoming more popular in Suriname. In many households, hotels, cafes and restaurants in larger towns offer wireless internet, which is very useful if you have your own laptop or smartphone with you. 
+
+Skype with your own laptop or calling via WhatsApp is also possible in many hotels, cafes and restaurants with wireless internet, provided the connection is stable.
+ 
+With prepaid SIM card for mobile phones You will then receive a Surinamese number If you also take an internet bundle, you can use the internet. there is no coverage in remote areas such as Kabalebo, Palumeu (Kasikasima) and Semoisi.
+<!-- SVB x opensea -->
+* SVB DDPC x OPEN SEA
+
+OpenSea is the first and largest marketplace for user-owned digital goods, which include collectibles, gaming items, domain names, digital art, and other assets backed by a blockchain.
+
 # SVB Player Token Creation
 
 This repo is a starting point for creating:
