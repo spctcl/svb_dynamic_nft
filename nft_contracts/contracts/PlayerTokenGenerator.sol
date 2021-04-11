@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "./APIConsumer.sol";
 
 // TODO: Change PlayerToken to something more descriptive, like PlayerTokenGenerator.
 contract PlayerTokenGenerator is ERC721, VRFConsumerBase, Ownable {
@@ -18,6 +19,8 @@ contract PlayerTokenGenerator is ERC721, VRFConsumerBase, Ownable {
     address public VRFCoordinator;
 
     address public LinkToken;
+
+    APIConsumer apiConsumer = new APIConsumer();
 
     struct Player {
         string name;
@@ -51,7 +54,7 @@ contract PlayerTokenGenerator is ERC721, VRFConsumerBase, Ownable {
     constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash)
         public
         VRFConsumerBase(_VRFCoordinator, _LinkToken)
-        ERC721("PlayerTokenGenerator", "SVB")
+        ERC721("Surinaamse Voetbal Bond", "SVB")
     {   
         VRFCoordinator = _VRFCoordinator;
         LinkToken = _LinkToken;
@@ -74,6 +77,7 @@ contract PlayerTokenGenerator is ERC721, VRFConsumerBase, Ownable {
         return requestId;
     }
 
+    // 
     function getTokenURI(uint256 tokenId) public view returns (string memory) {
         return tokenURI(tokenId);
     }
@@ -164,6 +168,18 @@ contract PlayerTokenGenerator is ERC721, VRFConsumerBase, Ownable {
             // players[tokenId].total_assists
         );
     }
+
+    // Get player goals from Chainlink node.
+    function getPlayerGoals()
+        public
+        returns(
+            bytes32
+        )
+        {
+            bytes32 requestId = apiConsumer.requestPlayerGoals();
+        // How do I get the result after fullfil is called in APIConsumer?
+            return requestId;
+        }
 
     function sqrt(uint256 x) internal view returns (uint256 y) {
         uint256 z = (x + 1) / 2;
