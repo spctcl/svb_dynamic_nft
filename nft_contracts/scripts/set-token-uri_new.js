@@ -1,4 +1,4 @@
-let privateKey = '0x86abc0e433774b7b25e4c59e0f15e0321ef7edd85af9e7960337524db3b4f30b'
+let privateKey = ''
 
 const truffle = require('truffle');
 var Web3 = require('web3');
