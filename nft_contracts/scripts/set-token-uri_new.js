@@ -1,4 +1,4 @@
-let privateKey = '0x86abc0e433774b7b25e4c59e0f15e0321ef7edd85af9e7960337524db3b4f30b'
+//let privateKey = 
 
 const truffle = require('truffle');
 var Web3 = require('web3');
@@ -52,7 +52,7 @@ module.exports = async (tokenURI, callback) => {
         //     .on('receipt', console.log);
      
         //const tx = await generator.setTokenURI(0, tokenURIPath, {from: account})
-        const tx = await generator.setTokenURI(0, 'https://ipfs.io/ipfs/QmNmYLXfLWvwFSRWMDCV21h3x36t5A6kkbE7p1WaHtzADx?filename=tokenURI.json')
+        const tx = await generator.setTokenURI(0, )
         // const tx1 = await generator.setTokenURI(1, "https://ipfs.io/ipfs/QmTvsVaaHTuMNmwXgbfgkrztFEazAPyzmrb4VSS2PbqLjA?filename=another_player_1.json")
         // const tx2 = await generator.setTokenURI(2, "https://ipfs.io/ipfs/QmPZQhiBB6pwcxRgwZe2mx6ZizCPYgq8i4FBMETyWK1V2z?filename=another_player_2.json")
         // const tx3 = await generator.setTokenURI(3, "https://ipfs.io/ipfs/QmS6aznzxshLMcECPQZjCR94UF22WHu6FMM5HLQvaYL9NP?filename=another_player_3.json")
