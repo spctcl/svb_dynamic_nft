@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//let privateKey = 
-=======
-let privateKey = ''
->>>>>>> df7cf0686191bcb09f97d7573a80f57f628756c0
+//let privateKey = ''
 
 const truffle = require('truffle');
 var Web3 = require('web3');
