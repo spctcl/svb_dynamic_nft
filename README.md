@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SVB Digital dynamic playercard (MH)
 <!-- Introduction -->
 ## Introduction (SH)
